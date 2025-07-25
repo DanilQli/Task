@@ -12,12 +12,14 @@ var size_viewport_y: int               # Высота экрана
 
 signal died                            # Сигнал смерти игрока
 signal hp_changed(new_hp)              # Сигнал изменения HP
+signal kill_changed(new_kill)          # Сигнал изменения количество убийств
 
 var facing_right : bool = true         # Куда смотрит игрок
 var is_attacking : bool = false        # Атакует ли сейчас
 
 @onready var attack_area = $Area2D
 @onready var sprite = $Sprite2D
+@onready var animate = $AnimationPlayer
 
 # Инициализация игрока, подключение сигналов, определение высоты экрана
 func _ready() -> void:
@@ -35,14 +37,14 @@ func _physics_process(delta: float) -> void:
 		if direction > 0:
 			facing_right = true
 			if not is_attacking:
-				$AnimationPlayer.play("walk_right")
+				animate.play("walk_right")
 		else:
 			facing_right = false
 			if not is_attacking:
-				$AnimationPlayer.play("walk_left")
+				animate.play("walk_left")
 	else:
 		if not is_attacking:
-			$AnimationPlayer.play("idle_right" if facing_right else "idle_left")
+			animate.play("idle_right" if facing_right else "idle_left")
 
 	if is_on_floor() and Input.is_action_just_pressed("ui_up"):
 		velocity.y = JUMP_VELOCITY
@@ -60,11 +62,11 @@ func attack() -> void:
 	is_attacking = true
 	attack_area.monitoring = is_attacking
 	if facing_right:
-		$Area2D.position.x = 20
-		$AnimationPlayer.play("attack_right")
+		attack_area.position.x = 20
+		animate.play("attack_right")
 	else:
-		$Area2D.position.x = -20
-		$AnimationPlayer.play("attack_left")
+		attack_area.position.x = -20
+		animate.play("attack_left")
 	await get_tree().create_timer(0.3).timeout
 	is_attacking = false
 	attack_area.monitoring = is_attacking
@@ -87,3 +89,4 @@ func _on_attack_area_body_entered(body: Node) -> void:
 # Счётчик убийств
 func add_kill():
 	kills += 1
+	emit_signal("kill_changed", kills)

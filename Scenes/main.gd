@@ -10,12 +10,12 @@ func _ready():
 	player.died.connect(_show_game_over)
 	player.died.connect(ui.show_game_over)
 	player.hp_changed.connect(ui.update_hp)
+	player.kill_changed.connect(ui.update_kill)
 	ui.update_hp(player.hp)
 	ui.update_kill(player.kills)
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.died.connect(_on_enemy_died)
 		enemy.died.connect(player.add_kill)
-		enemy.died.connect(ui.update_kill)
 
 # Перезапуск сцены
 func _show_game_over():

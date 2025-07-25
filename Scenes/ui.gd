@@ -1,6 +1,6 @@
 extends Node
 
-@export var player: NodePath
+@onready var player: NodePath
 @onready var game_over_label = $GameOver
 @onready var hp_label = $HBoxContainer/HP
 @onready var kills_label = $HBoxContainer/Kills
