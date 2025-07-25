@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dp15p35lc5j3g"]
+
+[ext_resource type="PackedScene" uid="uid://bj0rkkb5m7plt" path="res://Scenes/Enemy.tscn" id="1_jjvhh"]
+[ext_resource type="Script" uid="uid://1n7wugcwd33h" path="res://Scenes/main.gd" id="1_kry3j"]
+[ext_resource type="PackedScene" uid="uid://vp8xw8k205o" path="res://Scenes/Player.tscn" id="2_kry3j"]
+[ext_resource type="PackedScene" uid="uid://bmbskwkofnd0g" path="res://Scenes/tile_map.tscn" id="3_21xkr"]
+[ext_resource type="PackedScene" uid="uid://cnssqxuye2qy1" path="res://Scenes/UI.tscn" id="4_6bp64"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_kry3j")
+
+[node name="TileMap" parent="." instance=ExtResource("3_21xkr")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("4_6bp64")]
+
+[node name="Player" parent="." instance=ExtResource("2_kry3j")]
+position = Vector2(100, 300)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Enemys" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(654, 222)
+
+[node name="Enemy2" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(1269, 89)
+
+[node name="Enemy3" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(1699, 347)
+
+[node name="Enemy4" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(2360, 222)
+
+[node name="Enemy5" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(3098, 27)
+
+[node name="Enemy6" parent="Enemys" instance=ExtResource("1_jjvhh")]
+position = Vector2(3823, 351)
+
+[editable path="CanvasLayer/UI"]
